@@ -29,7 +29,7 @@ public class MasqLimitSwitch implements MasqHardware, MasqSensor {
     public MasqLimitSwitch(String name) {
         this.name = name;
         limitSwitch = MasqOpModeInternal.getInstance(null).getHardwareMap().digitalChannel.get(name);
-        limitSwitch.setMode(DigitalChannelController.Mode.INPUT);
+        limitSwitch.setMode(DigitalChannel.Mode.INPUT);
     }
     public void updateState() {
         signalValue = limitSwitch.getState();
