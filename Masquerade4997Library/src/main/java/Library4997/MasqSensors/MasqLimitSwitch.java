@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcOpModeRegister;
 
+import Library4997.MasqExternal.MasqOpModeInternal;
 import Library4997.MasqHardware;
 import Library4997.MasqSensor;
 
@@ -25,9 +26,9 @@ public class MasqLimitSwitch implements MasqHardware, MasqSensor {
     private boolean logicalState;
 
 
-    public MasqLimitSwitch(String name, HardwareMap hardwareMap) {
+    public MasqLimitSwitch(String name) {
         this.name = name;
-        limitSwitch = hardwareMap.digitalChannel.get(name);
+        limitSwitch = MasqOpModeInternal.getInstance(null).getHardwareMap().digitalChannel.get(name);
         limitSwitch.setMode(DigitalChannelController.Mode.INPUT);
     }
     public void updateState() {

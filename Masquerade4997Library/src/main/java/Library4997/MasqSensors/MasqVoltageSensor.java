@@ -7,13 +7,15 @@ import com.qualcomm.robotcore.util.RollingAverage;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcOpModeRegister;
 
+import Library4997.MasqExternal.MasqOpModeInternal;
+
 public class MasqVoltageSensor {
     public final static int samples = 2000000;
     VoltageSensor sensor;
     RollingAverage average;
 
-    public MasqVoltageSensor(HardwareMap hardwareMap) {
-        sensor = hardwareMap.voltageSensor.iterator().next();
+    public MasqVoltageSensor() {
+        sensor = MasqOpModeInternal.getInstance(null).getHardwareMap().voltageSensor.iterator().next();
         average = new RollingAverage(samples);
     }
 

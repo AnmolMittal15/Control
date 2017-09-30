@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcOpModeRegister;
 
+import Library4997.MasqExternal.MasqOpModeInternal;
 import Library4997.MasqHardware;
 import Library4997.MasqSensor;
 
@@ -16,9 +17,9 @@ public class MasqMatiboxUltraSensor implements MasqHardware, MasqSensor {
         private AnalogInput ds;
         private String nameDS;
     private int stopThresh = 30;
-    public MasqMatiboxUltraSensor(String name, HardwareMap hardwareMap){
+    public MasqMatiboxUltraSensor(String name){
             this.nameDS = name;
-            ds = hardwareMap.get(AnalogInput.class, name);
+            ds = MasqOpModeInternal.getInstance(null).getHardwareMap().get(AnalogInput.class, name);
         }
     public double getDistance() {
             return ds.getVoltage();

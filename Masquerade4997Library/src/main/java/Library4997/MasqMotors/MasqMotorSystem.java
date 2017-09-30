@@ -17,38 +17,37 @@ public class MasqMotorSystem implements PID_CONSTANTS, MasqHardware {
     private List<MasqMotor> motors;
     private int numMotors;
     private String systemName;
-    public MasqMotorSystem(String name1, DcMotor.Direction direction, String name2, DcMotor.Direction direction2, String systemName, HardwareMap hardwareMap) {
+    public MasqMotorSystem(String name1, DcMotor.Direction direction, String name2, DcMotor.Direction direction2, String systemName) {
         this.systemName = systemName;
-        motor1 = new MasqMotor(name1, direction, hardwareMap);
-        motor2 = new MasqMotor(name2, direction2, hardwareMap);
+        motor1 = new MasqMotor(name1, direction);
+        motor2 = new MasqMotor(name2, direction2);
         motor3 = null;
         motors = Arrays.asList(motor1, motor2);
         numMotors = 2;
     }
-    public MasqMotorSystem(String name1, String name2, String systemName, HardwareMap hardwareMap) {
+    public MasqMotorSystem(String name1, String name2, String systemName) {
         this.systemName = systemName;
-        motor1 = new MasqMotor(name1, DcMotor.Direction.FORWARD, hardwareMap);
-        motor2 = new MasqMotor(name2, DcMotor.Direction.FORWARD, hardwareMap);
+        motor1 = new MasqMotor(name1, DcMotor.Direction.FORWARD);
+        motor2 = new MasqMotor(name2, DcMotor.Direction.FORWARD);
         motor3 = null;
         motors = Arrays.asList(motor1, motor2);
         numMotors = 2;
     }
     public MasqMotorSystem(String name1, DcMotor.Direction direction,
                            String name2, DcMotor.Direction direction2,
-                           String name3, DcMotor.Direction direction3, String systemName,
-                            HardwareMap hardwareMap) {
+                           String name3, DcMotor.Direction direction3, String systemName) {
         this.systemName = systemName;
-        motor1 = new MasqMotor(name1, direction, hardwareMap);
-        motor2 = new MasqMotor(name2, direction2, hardwareMap);
-        motor3 = new MasqMotor(name3, direction3, hardwareMap);
+        motor1 = new MasqMotor(name1, direction);
+        motor2 = new MasqMotor(name2, direction2);
+        motor3 = new MasqMotor(name3, direction3);
         motors = Arrays.asList(motor1, motor2, motor3);
         numMotors = 3;
     }
-    public MasqMotorSystem(String name1, String name2, String name3, String systemName, HardwareMap hardwareMap) {
+    public MasqMotorSystem(String name1, String name2, String name3, String systemName) {
         this.systemName = systemName;
-        motor1 = new MasqMotor(name1, DcMotor.Direction.FORWARD, hardwareMap);
-        motor2 = new MasqMotor(name2, DcMotor.Direction.FORWARD, hardwareMap);
-        motor3 = new MasqMotor(name3, DcMotor.Direction.FORWARD, hardwareMap);
+        motor1 = new MasqMotor(name1, DcMotor.Direction.FORWARD);
+        motor2 = new MasqMotor(name2, DcMotor.Direction.FORWARD);
+        motor3 = new MasqMotor(name3, DcMotor.Direction.FORWARD);
         motors = Arrays.asList(motor1, motor2, motor3);
         numMotors = 3;
     }

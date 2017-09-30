@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcOpModeRegister;
 
+import Library4997.MasqExternal.MasqOpModeInternal;
 import Library4997.MasqHardware;
 
 
@@ -49,10 +50,10 @@ public class MasqColorSensor implements MasqHardware {
             whiteMinThreshold = 14, whiteMaxThreshold = 16;
 
 
-    public MasqColorSensor(String name, int i2cAddress, HardwareMap hardwareMap) {
+    public MasqColorSensor(String name, int i2cAddress) {
         this.name = name;
 
-        colorSensor = hardwareMap.i2cDevice.get(name);
+        colorSensor = MasqOpModeInternal.getInstance(null).getHardwareMap().i2cDevice.get(name);
         colorSensor.resetDeviceConfigurationForOpMode();
 
         colorSensorManager = new I2cDeviceSynchImpl(colorSensor, I2cAddr.create8bit(i2cAddress), false);
@@ -60,10 +61,10 @@ public class MasqColorSensor implements MasqHardware {
         colorSensorManager.engage();
         colorSensorManager.setReadWindow(new I2cDeviceSynch.ReadWindow(READ_WINDOW_START, READ_WINDOW_LENGTH, I2cDeviceSynch.ReadMode.REPEAT));
     }
-    public MasqColorSensor(String name, HardwareMap hardwareMap) {
+    public MasqColorSensor(String name) {
         this.name = name;
 
-        colorSensor = hardwareMap.i2cDevice.get(name);
+        colorSensor = MasqOpModeInternal.getInstance(null).getHardwareMap().i2cDevice.get(name);
         colorSensor.resetDeviceConfigurationForOpMode();
 
         colorSensorManager = new I2cDeviceSynchImpl(colorSensor, I2cAddr.create8bit(60), false);

@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcOpModeRegister;
 
+import Library4997.MasqExternal.MasqOpModeInternal;
 import Library4997.MasqHardware;
 
 
@@ -35,9 +36,9 @@ public class MasqIRSeeker implements MasqHardware {
             READ_WINDOW_START = DIRECTION_REGISTER_1200,
             READ_WINDOW_LENGTH = 5;
 
-    public MasqIRSeeker(String name, int i2cAddress, HardwareMap hardwareMap) {
+    public MasqIRSeeker(String name, int i2cAddress) {
         this.name = name;
-        irSeeker = hardwareMap.i2cDevice.get(name);
+        irSeeker = MasqOpModeInternal.getInstance(null).getHardwareMap().i2cDevice.get(name);
         irSeeker.resetDeviceConfigurationForOpMode();
         irSeekerManager = new I2cDeviceSynchImpl(irSeeker, I2cAddr.create8bit(i2cAddress), false);
         irSeekerManager.resetDeviceConfigurationForOpMode();

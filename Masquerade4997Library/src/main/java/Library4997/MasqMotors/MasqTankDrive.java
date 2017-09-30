@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcOpModeRegister;
 
+import Library4997.MasqExternal.MasqOpModeInternal;
 import Library4997.MasqHardware;
 import Library4997.MasqRobot;
 import Library4997.MasqSensors.MasqClock;
@@ -18,13 +19,13 @@ import Library4997.MasqExternal.PID_CONSTANTS;
 public class MasqTankDrive implements PID_CONSTANTS, MasqHardware {
     public MasqMotorSystem leftDrive, rightDrive = null;
     private double destination = 0;
-    public MasqTankDrive(String name1, String name2, String name3, String name4, HardwareMap hardwareMap) {
-        leftDrive = new MasqMotorSystem(name1, DcMotor.Direction.REVERSE, name2, DcMotor.Direction.REVERSE, "LEFTDRIVE", hardwareMap);
-        rightDrive = new MasqMotorSystem(name3, DcMotor.Direction.FORWARD, name4, DcMotor.Direction.FORWARD, "RIGHTDRIVE", hardwareMap);
+    public MasqTankDrive(String name1, String name2, String name3, String name4) {
+        leftDrive = new MasqMotorSystem(name1, DcMotor.Direction.REVERSE, name2, DcMotor.Direction.REVERSE, "LEFTDRIVE");
+        rightDrive = new MasqMotorSystem(name3, DcMotor.Direction.FORWARD, name4, DcMotor.Direction.FORWARD, "RIGHTDRIVE");
     }
-    public MasqTankDrive(HardwareMap hardwareMap){
-        leftDrive = new MasqMotorSystem("leftFront", DcMotor.Direction.REVERSE, "leftBack", DcMotor.Direction.REVERSE, "LEFTDRIVE", hardwareMap);
-        rightDrive = new MasqMotorSystem("rightFront", DcMotor.Direction.FORWARD, "rightBack", DcMotor.Direction.FORWARD, "RIGHTDRIVE", hardwareMap);
+    public MasqTankDrive(){
+        leftDrive = new MasqMotorSystem("leftFront", DcMotor.Direction.REVERSE, "leftBack", DcMotor.Direction.REVERSE, "LEFTDRIVE");
+        rightDrive = new MasqMotorSystem("rightFront", DcMotor.Direction.FORWARD, "rightBack", DcMotor.Direction.FORWARD, "RIGHTDRIVE");
     }
     public void resetEncoders () {
         leftDrive.resetEncoder();
@@ -78,7 +79,7 @@ public class MasqTankDrive implements PID_CONSTANTS, MasqHardware {
         setPower(0,0);
     }
     private boolean opModeIsActive() {
-        return MasqRobot.getInstance(null).opModeIsActive();
+        return MasqOpModeInternal.getInstance(null).opModeIsActive();
     }
     public void zeroPowerBehavior(){
         rightDrive.breakMotors();

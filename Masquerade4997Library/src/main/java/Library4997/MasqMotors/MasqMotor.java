@@ -23,16 +23,14 @@ public class MasqMotor implements PID_CONSTANTS, MasqHardware {
     private double previousTime = 0;
     private double destination = 0;
     private double currentPosition = 0, zeroEncoderPosition = 0 , prevRate = 0;
-    private HardwareMap hardwareMap = null;
     private MasqClock clock = new MasqClock();
-    public MasqMotor(String name, HardwareMap hardwareMap){
+    public MasqMotor(String name){
         this.nameMotor = name;
-        motor = hardwareMap.get(DcMotor.class, name);
+        motor = MasqOpModeInternal.getInstance(null).getHardwareMap().get(DcMotor.class, name);
     }
-    public MasqMotor(String name, DcMotor.Direction direction, HardwareMap hardwareMap) {
+    public MasqMotor(String name, DcMotor.Direction direction) {
         this.nameMotor = name;
-        this.hardwareMap = hardwareMap;
-        motor = hardwareMap.dcMotor.get(name);
+        motor = MasqOpModeInternal.getInstance(null).getHardwareMap().dcMotor.get(name);
         motor.setDirection(direction);
     }
     public void runWithoutEncoders () {
@@ -53,7 +51,7 @@ public class MasqMotor implements PID_CONSTANTS, MasqHardware {
         destination = distance;
     }
     private boolean opModeIsActive() {
-        return MasqRobot.getInstance(null).opModeIsActive();
+        return MasqOpModeInternal.getInstance(null).opModeIsActive();
     }
     public void runToPosition(Direction direction, double speed){
         resetEncoder();

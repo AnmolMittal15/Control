@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.ServoController;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcOpModeRegister;
 
+import Library4997.MasqExternal.MasqOpModeInternal;
 import Library4997.MasqHardware;
 import Library4997.MasqSensors.MasqClock;
 
@@ -17,9 +18,9 @@ public class MasqServo implements MasqHardware{
     private String nameServo;
     private double zero = 0;
     MasqClock clock = new MasqClock();
-    public MasqServo(String name, HardwareMap hardwareMap){
+    public MasqServo(String name){
         this.nameServo = name;
-        servo = hardwareMap.servo.get(name);
+        servo = MasqOpModeInternal.getInstance(null).getHardwareMap().servo.get(name);
     }
     public void setPosition (double angle, double maxPos) {
         angle = logicalToPhysical(angle,maxPos);

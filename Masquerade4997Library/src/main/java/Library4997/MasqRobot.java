@@ -24,38 +24,17 @@ import Library4997.MasqWrappers.MasqLinearOpMode;
  */
 //TODO make MasqRobot abstract to support multiple copies of a robot, for test bot, main bot, so forth
 public class MasqRobot implements PID_CONSTANTS {
-    public MasqLinearOpMode masqLinearOpMode;
-    public MasqRobot (MasqLinearOpMode linearOpMode) {
-        this.masqLinearOpMode = linearOpMode;
-    }
-    public MasqRobot () {}
-    private static MasqRobot instance;
-    public static MasqRobot getInstance (MasqLinearOpMode linearOpModeInstance) {
-        if (instance==null)
-             instance = new MasqRobot(linearOpModeInstance);
-        return instance;
-    }
-    public MasqTankDrive driveTrain;
-    public MasqAdafruitIMU imu;
-    public MasqVoltageSensor voltageSensor;
-    public MasqCRServo crServoOne, crServoTwo;
-    HardwareMap hardwareMap;
-    public void mapHardware(HardwareMap hardwareMap){
-        this.hardwareMap = hardwareMap;
-        driveTrain = new MasqTankDrive("leftFront", "leftBack", "rightFront", "rightBack", this.hardwareMap);
-        imu = new MasqAdafruitIMU("imu", this.hardwareMap);
-        voltageSensor = new MasqVoltageSensor(this.hardwareMap);
-        crServoOne = new MasqCRServo("servoOne", this.hardwareMap);
-        crServoTwo = new MasqCRServo("servoTwo", this.hardwareMap);
-    }
-
+    public MasqTankDrive driveTrain = new  MasqTankDrive("leftFront", "leftBack", "rightFront", "rightBack");
+    public MasqAdafruitIMU imu = new MasqAdafruitIMU("imu");
+    public MasqVoltageSensor voltageSensor = new MasqVoltageSensor();
+    public MasqCRServo crServoOne = new MasqCRServo("servoOne");
+    MasqCRServo crServoTwo = new MasqCRServo("servoTwo");
     private MasqClock timeoutClock = new MasqClock();
     public MasqVuforia vuforia = new MasqVuforia("RelicRecovery", "RelicVuMark");
     private static final int DEFAULT_SLEEP_TIME = 500;
     private static final double DEFAULT_TIMEOUT = 3;
     public double angleLeftCover = 0;
     private double color = 1;
-
     public enum AllianceColor {
         BLUE (-1.0),
         RED (+1.0);
@@ -68,9 +47,7 @@ public class MasqRobot implements PID_CONSTANTS {
         Targets(String value) {this.value = value;}
     }
     public void setAllianceColor(AllianceColor allianceColor){this.color = allianceColor.color;}
-    public boolean opModeIsActive() {
-        return masqLinearOpMode.opModeIsActive();
-    }
+    public boolean opModeIsActive() {return MasqOpModeInternal.getInstance(null).opModeIsActive();}
     public void drive(int distance, double speed, Direction DIRECTION, double timeOut, int sleepTime) {
         MasqClock timeoutTimer = new MasqClock();
         MasqClock loopTimer = new MasqClock();

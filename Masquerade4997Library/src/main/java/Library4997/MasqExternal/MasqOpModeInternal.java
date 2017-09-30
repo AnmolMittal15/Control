@@ -9,7 +9,6 @@ import Library4997.MasqWrappers.MasqLinearOpMode;
 
 public class MasqOpModeInternal {
     private MasqLinearOpMode masqLinearOpMode;
-    private HardwareMap hardwareMap;
     private static MasqOpModeInternal instance;
     public MasqOpModeInternal (MasqLinearOpMode linearOpMode) {
         masqLinearOpMode = linearOpMode;
