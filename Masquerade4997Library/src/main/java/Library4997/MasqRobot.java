@@ -1,15 +1,15 @@
 package Library4997;
 
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 
 import Library4997.MasqExternal.MasqOpModeInternal;
+import Library4997.MasqExternal.MasqSpecifications.Direction;
 import Library4997.MasqExternal.MasqSpecifications.SleepTime;
 import Library4997.MasqExternal.MasqSpecifications.Speed;
 import Library4997.MasqExternal.MasqSpecifications.Timeout;
-import Library4997.MasqExternal.PID_CONSTANTS;
+import Library4997.MasqExternal.CONSTANTS;
 import Library4997.MasqMotors.MasqTankDrive;
 import Library4997.MasqSensors.MasqAdafruitIMU;
 import Library4997.MasqSensors.MasqClock;
@@ -18,15 +18,13 @@ import Library4997.MasqSensors.MasqVoltageSensor;
 import Library4997.MasqSensors.MasqVuforia;
 import Library4997.MasqServos.MasqCRServo;
 import Library4997.MasqWrappers.DashBoard;
-import Library4997.MasqExternal.Direction;
 import Library4997.MasqWrappers.MasqController;
-import Library4997.MasqWrappers.MasqLinearOpMode;
 
 /**
  * MasqRobot--> Contains all hardware and methods to run the robot.
  */
 //TODO make MasqRobot abstract to support multiple copies of a robot, for test bot, main bot, so forth
-public class MasqRobot implements PID_CONSTANTS {
+public class MasqRobot implements CONSTANTS {
     public MasqTankDrive driveTrain = new  MasqTankDrive("leftFront", "leftBack", "rightFront", "rightBack");
     public MasqAdafruitIMU imu = new MasqAdafruitIMU("imu");
     public MasqVoltageSensor voltageSensor = new MasqVoltageSensor();

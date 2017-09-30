@@ -1,29 +1,22 @@
 package Library4997.MasqMotors;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import org.firstinspires.ftc.robotcontroller.internal.FtcOpModeRegister;
 
 import Library4997.MasqExternal.MasqOpModeInternal;
+import Library4997.MasqExternal.MasqSpecifications.Direction;
 import Library4997.MasqHardware;
-import Library4997.MasqRobot;
-import Library4997.MasqSensors.MasqClock;
-import Library4997.MasqExternal.Direction;
-import Library4997.MasqExternal.PID_CONSTANTS;
+import Library4997.MasqExternal.CONSTANTS;
 
 /**
  * This is a custom motor that includes stall detection and telemetry
  */
-public class MasqMotor implements PID_CONSTANTS, MasqHardware {
+public class MasqMotor implements CONSTANTS, MasqHardware {
     private DcMotor motor;
     private String nameMotor;
     private double prevPos= 0;
     private double previousTime = 0;
     private double destination = 0;
     private double currentPosition = 0, zeroEncoderPosition = 0 , prevRate = 0;
-    private MasqClock clock = new MasqClock();
     public MasqMotor(String name){
         this.nameMotor = name;
         motor = MasqOpModeInternal.getInstance(null).getHardwareMap().get(DcMotor.class, name);
@@ -33,6 +26,7 @@ public class MasqMotor implements PID_CONSTANTS, MasqHardware {
         motor = MasqOpModeInternal.getInstance(null).getHardwareMap().dcMotor.get(name);
         motor.setDirection(direction);
     }
+    public void setMode (DcMotor.RunMode mode) {motor.setMode(mode);}
     public void runWithoutEncoders () {
         motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }

@@ -1,24 +1,19 @@
 package Library4997.MasqMotors;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import org.firstinspires.ftc.robotcontroller.internal.FtcOpModeRegister;
 
 import Library4997.MasqExternal.MasqOpModeInternal;
+import Library4997.MasqExternal.MasqSpecifications.Direction;
 import Library4997.MasqExternal.MasqSpecifications.Speed;
 import Library4997.MasqExternal.MasqSpecifications.Timeout;
 import Library4997.MasqHardware;
-import Library4997.MasqRobot;
 import Library4997.MasqSensors.MasqClock;
-import Library4997.MasqExternal.Direction;
-import Library4997.MasqExternal.PID_CONSTANTS;
+import Library4997.MasqExternal.CONSTANTS;
 
 /**
  * Created by Archish on 10/28/16.
  */
-public class MasqTankDrive implements PID_CONSTANTS, MasqHardware {
+public class MasqTankDrive implements CONSTANTS, MasqHardware {
     public MasqMotorSystem leftDrive, rightDrive = null;
     private double destination = 0;
     public MasqTankDrive(String name1, String name2, String name3, String name4) {

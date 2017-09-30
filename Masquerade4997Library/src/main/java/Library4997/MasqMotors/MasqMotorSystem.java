@@ -1,18 +1,17 @@
 package Library4997.MasqMotors;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import java.util.Arrays;
 import java.util.List;
 
 import Library4997.MasqHardware;
-import Library4997.MasqExternal.PID_CONSTANTS;
+import Library4997.MasqExternal.CONSTANTS;
 
 /**
  * MasqMotorSystem That supports two or more motors and treats them as one
  */
-public class MasqMotorSystem implements PID_CONSTANTS, MasqHardware {
+public class MasqMotorSystem implements CONSTANTS, MasqHardware {
     public MasqMotor motor1 , motor2, motor3;
     private List<MasqMotor> motors;
     private int numMotors;
@@ -73,6 +72,11 @@ public class MasqMotorSystem implements PID_CONSTANTS, MasqHardware {
     public MasqMotorSystem breakMotors(){
         for (MasqMotor masqMotor: motors)
             masqMotor.setBreakMode();
+        return this;
+    }
+    public MasqMotorSystem setMode(DcMotor.RunMode mode) {
+        for (MasqMotor masqMotor: motors)
+            masqMotor.setMode(mode);
         return this;
     }
     public MasqMotorSystem runWithoutEncoders() {
