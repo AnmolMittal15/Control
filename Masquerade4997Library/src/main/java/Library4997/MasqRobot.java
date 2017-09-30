@@ -6,6 +6,9 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 
 import Library4997.MasqExternal.MasqOpModeInternal;
+import Library4997.MasqExternal.MasqSpecifications.SleepTime;
+import Library4997.MasqExternal.MasqSpecifications.Speed;
+import Library4997.MasqExternal.MasqSpecifications.Timeout;
 import Library4997.MasqExternal.PID_CONSTANTS;
 import Library4997.MasqMotors.MasqTankDrive;
 import Library4997.MasqSensors.MasqAdafruitIMU;
@@ -31,8 +34,8 @@ public class MasqRobot implements PID_CONSTANTS {
     MasqCRServo crServoTwo = new MasqCRServo("servoTwo");
     private MasqClock timeoutClock = new MasqClock();
     public MasqVuforia vuforia = new MasqVuforia("RelicRecovery", "RelicVuMark");
-    private static final int DEFAULT_SLEEP_TIME = 500;
-    private static final double DEFAULT_TIMEOUT = 3;
+    private static final SleepTime DEFAULT_SLEEP_TIME = SleepTime.OPTIMAL;
+    private static final Timeout DEFAULT_TIMEOUT = Timeout.DRIVE_OPTIMAL;
     public double angleLeftCover = 0;
     private double color = 1;
     public enum AllianceColor {
@@ -48,7 +51,7 @@ public class MasqRobot implements PID_CONSTANTS {
     }
     public void setAllianceColor(AllianceColor allianceColor){this.color = allianceColor.color;}
     public boolean opModeIsActive() {return MasqOpModeInternal.getInstance(null).opModeIsActive();}
-    public void drive(int distance, double speed, Direction DIRECTION, double timeOut, int sleepTime) {
+    public void drive(int distance, Speed speed, Direction DIRECTION, Timeout timeOut, SleepTime sleepTime) {
         MasqClock timeoutTimer = new MasqClock();
         MasqClock loopTimer = new MasqClock();
         driveTrain.resetEncoders();
@@ -92,30 +95,30 @@ public class MasqRobot implements PID_CONSTANTS {
         driveTrain.stopDriving();
         sleep(sleepTime);
     }
-    public void drive(int distance, double power, Direction DIRECTION, double timeOut) {
+    public void drive(int distance, Speed power, Direction DIRECTION, Timeout timeOut) {
         drive(distance, power, DIRECTION, timeOut, DEFAULT_SLEEP_TIME);
     }
-    public void drive(int distance, double power, Direction Direction) {
+    public void drive(int distance, Speed power, Direction Direction) {
         drive(distance, power, Direction, DEFAULT_TIMEOUT);
     }
-    public void drive (int distance, double power){
+    public void drive (int distance, Speed power){
         drive(distance, power, Direction.FORWARD);
     }
-    public void drive(int distance) {drive(distance, 0.5);}
+    public void drive(int distance) {drive(distance, Speed.OPTIMAL);}
 
-    public void runToPosition(int distance, Direction direction, double speed, double timeOut, int sleepTime) {
+    public void runToPosition(int distance, Direction direction, Speed speed, Timeout timeOut, SleepTime sleepTime) {
         driveTrain.setDistance(distance);
         driveTrain.runToPosition(direction, speed, timeOut);
-        sleep(sleepTime);
+        sleep(sleepTime.value);
     }
-    public void runToPosition(int distance, Direction direction, double speed, double timeOut) {
+    public void runToPosition(int distance, Direction direction, Speed speed, Timeout timeOut) {
         runToPosition(distance, direction, speed, timeOut, DEFAULT_SLEEP_TIME);
     }
-    public void runToPosition(int distance, Direction direction, double speed) {
+    public void runToPosition(int distance, Direction direction, Speed speed) {
         runToPosition(distance, direction, speed, DEFAULT_TIMEOUT);
     }
     public void runToPosition(int distance, Direction direction) {
-        runToPosition(distance, direction, 0.7);
+        runToPosition(distance, direction, Speed.OPTIMAL);
     }
     public void runToPosition(int distance) {runToPosition(distance, Direction.FORWARD);}
 
@@ -157,13 +160,13 @@ public class MasqRobot implements PID_CONSTANTS {
     public void turn(int angle, Direction DIRECTION, double timeOut, int sleepTime, double kp, double ki) {
         turn(angle, DIRECTION, timeOut, sleepTime, kp, ki, KD_TURN);
     }
-    public void turn(int angle, Direction DIRECTION, double timeOut, int sleepTime, double kp) {
+    public void turn(int angle, Direction DIRECTION, Timeout timeOut, SleepTime sleepTime, double kp) {
         turn(angle, DIRECTION, timeOut, sleepTime, kp, KI_TURN);
     }
-    public void turn(int angle, Direction DIRECTION, double timeOut, int sleepTime) {
+    public void turn(int angle, Direction DIRECTION, Timeout timeOut, SleepTime sleepTime) {
         turn(angle, DIRECTION, timeOut, sleepTime, KP_TURN);
     }
-    public void turn(int angle, Direction DIRECTION, double timeout)  {
+    public void turn(int angle, Direction DIRECTION, Timeout timeout)  {
         turn(angle, DIRECTION, timeout, DEFAULT_SLEEP_TIME);
     }
     public void turn(int angle, Direction DIRECTION)  {turn(angle, DIRECTION, DEFAULT_TIMEOUT);}

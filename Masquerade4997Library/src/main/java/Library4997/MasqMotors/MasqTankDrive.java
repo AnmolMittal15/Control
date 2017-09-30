@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcontroller.internal.FtcOpModeRegister;
 
 import Library4997.MasqExternal.MasqOpModeInternal;
+import Library4997.MasqExternal.MasqSpecifications.Speed;
+import Library4997.MasqExternal.MasqSpecifications.Timeout;
 import Library4997.MasqHardware;
 import Library4997.MasqRobot;
 import Library4997.MasqSensors.MasqClock;
@@ -55,7 +57,7 @@ public class MasqTankDrive implements PID_CONSTANTS, MasqHardware {
         rightDrive.runUsingEncoder();
     }
 
-    public void runToPosition(Direction direction, double speed, double timeOut) {
+    public void runToPosition(Direction direction, Speed speed, Timeout timeOut) {
         MasqClock timeoutTimer = new MasqClock();
         resetEncoders();
         int targetClicks = (int)(destination * CLICKS_PER_CM);
@@ -65,10 +67,10 @@ public class MasqTankDrive implements PID_CONSTANTS, MasqHardware {
         do {
             clicksRemaining = (int) (targetClicks - Math.abs(getCurrentPos()));
             inchesRemaining = clicksRemaining / CLICKS_PER_CM;
-            power = direction.value * speed * inchesRemaining * KP_STRAIGHT;
+            power = direction.value * speed .value* inchesRemaining * KP_STRAIGHT;
             setPower(power, -power);
         }
-        while (opModeIsActive() && inchesRemaining > 0.5 && !timeoutTimer.elapsedTime(timeOut, MasqClock.Resolution.SECONDS));
+        while (opModeIsActive() && inchesRemaining > 0.5 && !timeoutTimer.elapsedTime(timeOut.value, MasqClock.Resolution.SECONDS));
         setPower(0);
     }
     public void runWithoutEncoders() {
