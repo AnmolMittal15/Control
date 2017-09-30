@@ -10,6 +10,7 @@ import Library4997.MasqWrappers.MasqLinearOpMode;
 public class MasqOpModeInternal {
     private MasqLinearOpMode masqLinearOpMode;
     private static MasqOpModeInternal instance;
+    private HardwareMap hardwareMap;
     public MasqOpModeInternal (MasqLinearOpMode linearOpMode) {
         masqLinearOpMode = linearOpMode;
     }
@@ -19,7 +20,6 @@ public class MasqOpModeInternal {
         return instance;
     }
     public boolean opModeIsActive() {return masqLinearOpMode.opModeIsActive();}
-    public HardwareMap getHardwareMap (){
-        return masqLinearOpMode.hardwareMap;
-    }
+    public void setHardwareMap(HardwareMap hardwareMap) {this.hardwareMap = hardwareMap;}
+    public HardwareMap getHardwareMap(){return hardwareMap;}
 }

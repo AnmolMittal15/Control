@@ -29,7 +29,7 @@ public class MasqRobot implements CONSTANTS {
     public MasqAdafruitIMU imu = new MasqAdafruitIMU("imu");
     public MasqVoltageSensor voltageSensor = new MasqVoltageSensor();
     public MasqCRServo crServoOne = new MasqCRServo("servoOne");
-    MasqCRServo crServoTwo = new MasqCRServo("servoTwo");
+    public MasqCRServo crServoTwo = new MasqCRServo("servoTwo");
     private MasqClock timeoutClock = new MasqClock();
     public MasqVuforia vuforia = new MasqVuforia("RelicRecovery", "RelicVuMark");
     private static final SleepTime DEFAULT_SLEEP_TIME = SleepTime.OPTIMAL;

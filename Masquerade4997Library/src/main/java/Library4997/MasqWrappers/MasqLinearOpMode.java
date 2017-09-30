@@ -15,7 +15,7 @@ public abstract class MasqLinearOpMode extends LinearOpMode {
     public MasqRobot robot;
     protected MasqController controller1;
     protected MasqController controller2;
-    private MasqOpModeInternal opModeInternal;
+    protected MasqOpModeInternal opModeInternal;
     public final void runOpMode() throws InterruptedException {
         try {
             opModeInternal = new MasqOpModeInternal(this);
