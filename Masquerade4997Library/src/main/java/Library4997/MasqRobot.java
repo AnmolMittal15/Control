@@ -72,7 +72,7 @@ public class MasqRobot implements PID_CONSTANTS {
         do {
             clicksRemaining = (int) (targetClicks - Math.abs(driveTrain.getCurrentPos()));
             inchesRemaining = clicksRemaining / CLICKS_PER_CM;
-            power = DIRECTION.value * speed * inchesRemaining * -KP_STRAIGHT;
+            power = DIRECTION.value * speed.value * inchesRemaining * -KP_STRAIGHT;
             power = Range.clip(power, -1.0, +1.0);
             dt = loopTimer.milliseconds();
             loopTimer.reset();
@@ -91,9 +91,9 @@ public class MasqRobot implements PID_CONSTANTS {
                 rightPower /= maxPower;
             }
             driveTrain.setPower(leftPower, rightPower);
-        } while (opModeIsActive() && (inchesRemaining > 0.5 || Math.abs(angularError) > 0.5) && !timeoutTimer.elapsedTime(timeOut, MasqClock.Resolution.SECONDS));
+        } while (opModeIsActive() && (inchesRemaining > 0.5 || Math.abs(angularError) > 0.5) && !timeoutTimer.elapsedTime(timeOut.value, MasqClock.Resolution.SECONDS));
         driveTrain.stopDriving();
-        sleep(sleepTime);
+        sleep(sleepTime.value);
     }
     public void drive(int distance, Speed power, Direction DIRECTION, Timeout timeOut) {
         drive(distance, power, DIRECTION, timeOut, DEFAULT_SLEEP_TIME);
@@ -122,7 +122,7 @@ public class MasqRobot implements PID_CONSTANTS {
     }
     public void runToPosition(int distance) {runToPosition(distance, Direction.FORWARD);}
 
-    public void turn(int angle, Direction DIRECTION, double timeOut, int sleepTime, double kp, double ki, double kd) {
+    public void turn(int angle, Direction DIRECTION, Timeout timeOut, SleepTime sleepTime, double kp, double ki, double kd) {
         double targetAngle = imu.adjustAngle(imu.getHeading() + (DIRECTION.value * angle));
         double acceptableError = 0.5;
         double currentError = 1;
@@ -132,7 +132,7 @@ public class MasqRobot implements PID_CONSTANTS {
         double previousTime = 0;
         timeoutClock.reset();
         while (opModeIsActive() && (imu.adjustAngle(Math.abs(currentError)) > acceptableError)
-                && !timeoutClock.elapsedTime(timeOut, MasqClock.Resolution.SECONDS)) {
+                && !timeoutClock.elapsedTime(timeOut.value, MasqClock.Resolution.SECONDS)) {
             double tChange = System.nanoTime() - previousTime;
             previousTime = System.nanoTime();
             tChange = tChange / 1e9;
@@ -155,9 +155,9 @@ public class MasqRobot implements PID_CONSTANTS {
             DashBoard.getDash().update();
         }
         driveTrain.setPower(0,0);
-        sleep(sleepTime);
+        sleep(sleepTime.value);
     }
-    public void turn(int angle, Direction DIRECTION, double timeOut, int sleepTime, double kp, double ki) {
+    public void turn(int angle, Direction DIRECTION, Timeout timeOut, SleepTime sleepTime, double kp, double ki) {
         turn(angle, DIRECTION, timeOut, sleepTime, kp, ki, KD_TURN);
     }
     public void turn(int angle, Direction DIRECTION, Timeout timeOut, SleepTime sleepTime, double kp) {
@@ -171,70 +171,70 @@ public class MasqRobot implements PID_CONSTANTS {
     }
     public void turn(int angle, Direction DIRECTION)  {turn(angle, DIRECTION, DEFAULT_TIMEOUT);}
 
-    public void stopRed(MasqColorSensor colorSensor, double power, Direction Direction) {
+    public void stopRed(MasqColorSensor colorSensor, Speed power, Direction Direction) {
         driveTrain.runUsingEncoder();
         double targetAngle = imu.getHeading();
         while (!(colorSensor.isRed()) && opModeIsActive()) {
-            double newPower = power;
+            double newPower = power.value;
             double heading = imu.getHeading();
             double error = targetAngle - heading;
             double errorkp = error * KP_STRAIGHT;
             newPower = newPower - (errorkp * Direction.value);
             driveTrain.setPowerLeft(newPower * Direction.value);
-            driveTrain.setPowerRight(power * Direction.value);
+            driveTrain.setPowerRight(power.value * Direction.value);
             DashBoard.getDash().create("Heading", heading);
             DashBoard.getDash().create("red Val", colorSensor.colorNumber());
             DashBoard.getDash().update();
         }
         driveTrain.stopDriving();
     }
-    public void stopRed (MasqColorSensor colorSensor, double power){
+    public void stopRed (MasqColorSensor colorSensor, Speed power){
         stopRed(colorSensor, power, Direction.BACKWARD);
     }
-    public void stopRed (MasqColorSensor colorSensor){stopRed(colorSensor, 0.5);}
+    public void stopRed (MasqColorSensor colorSensor){stopRed(colorSensor, Speed.OPTIMAL);}
 
-    public void stopBlue(MasqColorSensor colorSensor, double power, Direction Direction) {
+    public void stopBlue(MasqColorSensor colorSensor, Speed power, Direction Direction) {
         driveTrain.runUsingEncoder();
         double targetAngle = imu.getHeading();
         while ((!colorSensor.isBlue()) && opModeIsActive()){
-            double newPower = power;
+            double newPower = power.value;
             double heading = imu.getHeading();
             double error = targetAngle - heading;
             double errorkp = error * KP_STRAIGHT;
             newPower = newPower - (errorkp * Direction.value);
             driveTrain.setPowerLeft(newPower * Direction.value);
-            driveTrain.setPowerRight(power * Direction.value);
+            driveTrain.setPowerRight(power.value * Direction.value);
             DashBoard.getDash().create("Heading", heading);
             DashBoard.getDash().create("Blue Val", colorSensor.colorNumber());
             DashBoard.getDash().update();
         }
         driveTrain.stopDriving();
     }
-    public void stopBlue (MasqColorSensor colorSensor, double power){
+    public void stopBlue (MasqColorSensor colorSensor, Speed power){
         stopBlue(colorSensor, power, Direction.BACKWARD);
     }
-    public void stopBlue (MasqColorSensor colorSensor){stopBlue(colorSensor, 0.5);}
+    public void stopBlue (MasqColorSensor colorSensor){stopBlue(colorSensor, Speed.OPTIMAL);}
 
-    public void stop(MasqSensor sensor, double power, Direction Direction) {
+    public void stop(MasqSensor sensor, Speed power, Direction Direction) {
         driveTrain.runUsingEncoder();
         double targetAngle = imu.getHeading();
         while (sensor.stop() && opModeIsActive()) {
-            double newPower = power;
+            double newPower = power.value;
             double heading = imu.getHeading();
             double error = targetAngle - heading;
             double errorKP = error * KP_STRAIGHT;
             newPower = newPower - (errorKP * Direction.value);
             driveTrain.setPowerLeft(newPower * Direction.value);
-            driveTrain.setPowerRight(power * Direction.value);
+            driveTrain.setPowerRight(power.value * Direction.value);
             DashBoard.getDash().create("is Stopped", sensor.stop());
             DashBoard.getDash().update();
         }
         driveTrain.stopDriving();
     }
-    public void stop (MasqSensor sensor, double power){
+    public void stop (MasqSensor sensor, Speed power){
         stop(sensor, power, Direction.BACKWARD);
     }
-    public void stop (MasqSensor sensor){stop(sensor, 0.5);}
+    public void stop (MasqSensor sensor){stop(sensor, Speed.OPTIMAL);}
 
 
     public void NFS(MasqController c) {
@@ -334,7 +334,7 @@ public class MasqRobot implements PID_CONSTANTS {
             Thread.currentThread().interrupt();
         }
     }
-    public void sleep() {sleep(DEFAULT_SLEEP_TIME);}
+    public void sleep() {sleep(DEFAULT_SLEEP_TIME.value);}
 
     private double scaleInput(double d)  {
         double[] scaleArray = { 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
